@@ -21,16 +21,18 @@ class Books(db.Model):
     author = db.Column(db.String, nullable=False)
     price = db.Column(db.Float, nullable=False)
     description = db.Column(db.String, nullable=False)
+    reading = db.Column(db.Boolean, nullable=False)
 
-    def __init__(self, name, price, author, description):
+    def __init__(self, name, price, author, description, reading):
         self.name = name
         self.price = price
         self.author = author
         self.description = description
+        self.reading = reading
 
 class BookSchema(ma.Schema):
     class Meta:
-        fields = ("id", "name", "price", "author", "description")
+        fields = ("id", "name", "price", "author", "description","reading")
 
 book_schema = BookSchema()
 books_schema = BookSchema(many=True)
@@ -42,8 +44,9 @@ def add_book():
     description = request.json.get("description")
     author = request.json.get("author")
     price = request.json.get("price")
+    reading = request.json.get("reading")
 
-    record = Books(name, price, author, description)
+    record = Books(name, price, author, description, reading)
     db.session.add(record)
     db.session.commit()
 
