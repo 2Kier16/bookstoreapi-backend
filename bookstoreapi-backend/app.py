@@ -58,6 +58,10 @@ def get_all_books():
     all_books = Books.query.all()
     return jsonify(books_schema.dump(all_books))
 
+@app.route("/books/<id>", methods=["DELETE"])
+def book_id(id):
+    book = Books.query.get(id)
+    db.session.del
 
 
 
